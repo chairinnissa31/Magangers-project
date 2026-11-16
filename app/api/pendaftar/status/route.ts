@@ -143,15 +143,18 @@ export async function GET(req: Request) {
 
     // ==========================================
     // PENGAJUAN DITERIMA
+    // Peserta baru masuk tahap wawancara jika
+    // jadwal wawancara sudah berhasil tersimpan.
     // ==========================================
-    if (
-      latestStatus === "diterima" &&
-      (
+    if (latestStatus === "diterima") {
+      if (jadwal) {
+        effectiveStatus = "wawancara";
+      } else if (
         effectiveStatus === "mengajukan" ||
         effectiveStatus === "tidak_aktif"
-      )
-    ) {
-      effectiveStatus = "verifikasi";
+      ) {
+        effectiveStatus = "verifikasi";
+      }
     }
 
     // ==========================================
